@@ -4,6 +4,7 @@ from bunch import bunchify
 import requests
 import json
 import sys
+from datetime import date, datetime
 from fastapi import FastAPI
 
 app = App(FastAPI())
@@ -197,10 +198,15 @@ def loadDataBase():
                                 nombreMascota = data.get(uid).get(dataUID).get(mascotaId).get("nombre")
                                 fechaNacimiento = data.get(uid).get(dataUID).get(mascotaId).get("nacimiento")
 
+                                mensajeMascota = ""
+                                if date.today().day() == fechaNacimiento.strptime().day() and date.today().month() == fechaNacimiento.strptime().month():
+                                    mensajeMascota = "🎊🎉🥳 Hoy es el cumpleaños de tu mascota {0}!!!🥳🎉🎊".format(nombreMascota)
+
                                 dataToNotification.append({
                                     "mascotaId": mascotaId,
                                     "nombre": nombreMascota,
                                     "fechaNacimiento": str(fechaNacimiento),
+                                    "msjNotificacion": mensajeMascota if mensajeMascota != "" else None,
                                     "vacunas": loadVacunasByUserByMascota(data, uid, mascotaId),
                                     "certificados": loadCertificadosByUserByMascota(data, uid, mascotaId)
                                 })
@@ -242,14 +248,14 @@ def cron_job(event):
         for userFCM in usuariosFirebase:
             payload = {
                     "notification": {
-                        "body": "Deta test notification",
+                        "body": "Deta test notification 😁",
                         "title": "Patita Patita"
                     },
                     "priority": "high",
                     "data": {
                         "uid": "1",
                         "click_action": "FLUTTER_NOTIFICATION_CLICK",
-                        "mensajePush": "prueba desde deta"
+                        "mensajePush": "prueba desde deta 😁"
                     },
                     "to": userFCM["fcmToken"]
                 }
