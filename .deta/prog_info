@@ -1,0 +1,1 @@
+{"id":"c33215d2-ed2f-499e-8b7d-97e82ff8ff98","space":2321,"runtime":"python3.7","name":"notificacionesAppPatita","path":"gk83g3","project":"b0kl5e3a","account":"144798365827","region":"sa-east-1","deps":["fastapi","requests","Bunch"],"envs":null,"public":true,"log_level":"debug","cron":"","reload_deps":false}
